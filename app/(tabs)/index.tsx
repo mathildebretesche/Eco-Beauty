@@ -5,6 +5,7 @@ import { Link } from 'expo-router';
 import { PRODUCTS } from '@/lib/products';
 import { useCart } from '@/lib/CartContext';
 import { useUserPreferences } from '@/lib/UserPreferencesContext';
+import { router } from 'expo-router';
 
 const PASTEL_PINK = '#f8b4c4';
 const PASTEL_GREEN = '#98d4a8';
@@ -29,6 +30,8 @@ export default function RecommandationScreen() {
       .map((item) => item.product);
     return scored.length ? scored : PRODUCTS.slice(0, 5);
   }, [tags]);
+
+  const { resetPreferences } = useUserPreferences();
 
   const addFeaturedToCart = (productId: string) => {
     const product = PRODUCTS.find((p) => p.id === productId);
@@ -62,8 +65,31 @@ export default function RecommandationScreen() {
     } as const;
   };
 
+  const handleDevReset = async () => {
+    if (resetPreferences) await resetPreferences();
+    router.replace('/gateway');
+  };
+
   return (
     <Animated.View className="flex-1" style={{ backgroundColor: LIGHT_PINK, opacity: fade }}>
+    {/* --- AJOUT 3 : Le bouton flottant, tout en haut du rendu --- */}
+    {__DEV__ && (
+        <Pressable
+          onPress={handleDevReset}
+          style={{
+            position: 'absolute',
+            top: 50, 
+            left: 14,
+            zIndex: 50,
+            backgroundColor: '#ef4444', 
+            paddingHorizontal: 10,
+            paddingVertical: 6,
+            borderRadius: 999,
+          }}
+        >
+          <Text style={{ color: 'white', fontWeight: '700', fontSize: 11 }}>DEV • Reset App</Text>
+        </Pressable>
+      )}
       {/* Décorations "mesh" (palette pastel inchangée) */}
       <View
         pointerEvents="none"
@@ -105,6 +131,23 @@ export default function RecommandationScreen() {
           <Text className="mt-2 text-sm" style={{ color: '#6b7280' }}>
             Voici votre sélection Eco-responsable personnalisée.
           </Text>
+     {__DEV__ && (
+        <Pressable
+          onPress={handleDevReset}
+          style={{
+            position: 'absolute',
+            top: 50, 
+            left: 14,
+            zIndex: 50,
+            backgroundColor: '#ef4444', 
+            paddingHorizontal: 10,
+            paddingVertical: 6,
+            borderRadius: 999,
+          }}
+        >
+          <Text style={{ color: 'white', fontWeight: '700', fontSize: 11 }}>DEV • Reset App</Text>
+        </Pressable>
+      )}
         </View>
 
         {/* Boutons CTA */}
@@ -284,6 +327,8 @@ export default function RecommandationScreen() {
                     borderColor: PASTEL_GREEN,
                   }}
                 >
+
+                  
                   <Text className="font-semibold" style={{ color: '#166534' }}>
                     Ajouter au panier
                   </Text>
@@ -296,3 +341,5 @@ export default function RecommandationScreen() {
     </Animated.View>
   );
 }
+
+

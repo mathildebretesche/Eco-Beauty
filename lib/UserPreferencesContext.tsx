@@ -31,6 +31,8 @@ export const INTEREST_TAGS = [
   'Parfums naturels',
 ] as const;
 
+
+
 export type InterestTag = (typeof INTEREST_TAGS)[number];
 
 interface UserPreferencesContextType {
@@ -48,6 +50,7 @@ interface UserPreferencesContextType {
   /** Remet le choix gateway (B2C/B2B) pour afficher à nouveau l’accueil split */
   clearUserSegment: () => Promise<void>;
   completeOnboarding: (payload: { username: string; email: string; tags: string[] }) => Promise<void>;
+  resetPreferences: () => Promise<void>; 
 }
 
 const UserPreferencesContext = createContext<UserPreferencesContextType | undefined>(undefined);
@@ -88,6 +91,24 @@ export function UserPreferencesProvider({ children }: { children: React.ReactNod
       }
     };
     load();
+  }, []);
+
+  const resetPreferences = useCallback(async () => {
+    // 1. On remet à zéro les états React (pour mettre à jour l'UI instantanément)
+    setSegmentState(null);
+    setOnboarded(false);
+    setUsernameState('');
+    setEmailState('');
+    setTagsState([]);
+
+    // 2. On nettoie complètement la mémoire locale du téléphone
+    await Promise.all([
+      AsyncStorage.removeItem(STORAGE_KEYS.segment),
+      AsyncStorage.removeItem(STORAGE_KEYS.onboarded),
+      AsyncStorage.removeItem(STORAGE_KEYS.username),
+      AsyncStorage.removeItem(STORAGE_KEYS.email),
+      AsyncStorage.removeItem(STORAGE_KEYS.tags),
+    ]);
   }, []);
 
   const setUsername = useCallback(async (value: string) => {
@@ -149,6 +170,7 @@ export function UserPreferencesProvider({ children }: { children: React.ReactNod
       setTags,
       setUserSegment,
       clearUserSegment,
+      resetPreferences,
       completeOnboarding,
     }),
     [
@@ -163,6 +185,7 @@ export function UserPreferencesProvider({ children }: { children: React.ReactNod
       setTags,
       setUserSegment,
       clearUserSegment,
+      resetPreferences,
       completeOnboarding,
     ]
   );

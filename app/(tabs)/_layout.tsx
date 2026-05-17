@@ -51,7 +51,7 @@ export default function TabLayout() {
 
   if (!onboarded) {
     if (!segment) return <Redirect href="/gateway" />;
-    if (segment === 'b2b') return <Redirect href="/pro/index" />;
+    if (segment === 'b2b') return <Redirect href="/pro" />;
     return <Redirect href="/onboarding" />;
   }
 

@@ -27,7 +27,7 @@ export default function Index() {
     return <Redirect href="/gateway" />;
   }
   if (segment === 'b2b') {
-    return <Redirect href="/pro/index" />;
+    return <Redirect href="/pro" />;
   }
   if (!onboarded) {
     return <Redirect href="/onboarding" />;

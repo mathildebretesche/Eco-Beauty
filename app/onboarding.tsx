@@ -39,7 +39,7 @@ export default function OnboardingScreen() {
     }).start();
   }, [step, fade]);
 
-  if (segment === 'b2b') return <Redirect href="/pro/index" />;
+  if (segment === 'b2b') return <Redirect href="/pro" />;
   if (!segment) return <Redirect href="/gateway" />;
   if (onboarded) return <Redirect href="/(tabs)" />;
 

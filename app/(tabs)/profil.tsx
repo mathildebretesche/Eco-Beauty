@@ -229,7 +229,7 @@ export default function ProfilScreen() {
           <TouchableOpacity
             onPress={async () => {
               await setUserSegment('b2b');
-              router.replace('/pro/index');
+              router.replace('/pro');
             }}
             className="py-3 px-4 rounded-xl mb-2"
             style={{ backgroundColor: '#ecfdf5', borderWidth: 1, borderColor: PASTEL_GREEN }}
