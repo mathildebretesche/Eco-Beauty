@@ -7,8 +7,11 @@ export default function RootLayout() {
     <UserPreferencesProvider>
       <CartProvider>
         <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="gateway" />
           <Stack.Screen name="onboarding" />
           <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="pro" />
           <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
         </Stack>
       </CartProvider>

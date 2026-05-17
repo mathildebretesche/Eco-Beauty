@@ -85,8 +85,8 @@ export default function CartScreen() {
               </Text>
             </View>
             <TouchableOpacity
-            className="py-4 rounded-2xl items-center"
-              style={{ backgroundColor: PASTEL_GREEN, shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 8, elevation: 4 }}
+              className="py-4 rounded-2xl items-center"
+              style={{ backgroundColor: PASTEL_GREEN }}
             >
               <Text className="text-lg font-bold text-white">Passer au paiement</Text>
             </TouchableOpacity>

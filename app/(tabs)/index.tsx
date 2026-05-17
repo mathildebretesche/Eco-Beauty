@@ -109,6 +109,23 @@ export default function RecommandationScreen() {
 
         {/* Boutons CTA */}
         <View className="flex-row mt-5 gap-3">
+          <Link href="/boutique" asChild>
+            <Pressable
+              className="flex-1"
+              style={{
+                ...glassStyle('green'),
+                paddingVertical: 12,
+                borderRadius: 18,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Ionicons name="diamond-outline" size={20} color={PASTEL_GREEN} />
+              <Text className="mt-2 font-semibold" style={{ color: '#166534' }}>
+                Boutique premium
+              </Text>
+            </Pressable>
+          </Link>
           <Link href="/flux" asChild>
             <Pressable
               className="flex-1"
@@ -126,6 +143,9 @@ export default function RecommandationScreen() {
               </Text>
             </Pressable>
           </Link>
+        </View>
+
+        <View className="flex-row mt-3 gap-3">
           <Link href="/map" asChild>
             <Pressable
               className="flex-1"

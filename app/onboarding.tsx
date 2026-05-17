@@ -22,7 +22,7 @@ function getPasswordStrength(password: string) {
 }
 
 export default function OnboardingScreen() {
-  const { onboarded, completeOnboarding } = useUserPreferences();
+  const { onboarded, segment, completeOnboarding } = useUserPreferences();
   const [step, setStep] = useState(1);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -39,6 +39,8 @@ export default function OnboardingScreen() {
     }).start();
   }, [step, fade]);
 
+  if (segment === 'b2b') return <Redirect href="/pro/index" />;
+  if (!segment) return <Redirect href="/gateway" />;
   if (onboarded) return <Redirect href="/(tabs)" />;
 
   const emailValid = /\S+@\S+\.\S+/.test(email);

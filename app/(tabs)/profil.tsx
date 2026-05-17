@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
 import { useUserPreferences } from '@/lib/UserPreferencesContext';
 
 const PASTEL_PINK = '#f8b4c4';
@@ -19,7 +20,7 @@ const LIGHT_PINK = '#FFC5D3';
 const STORAGE_KEYS = { photo: '@ecobeauty_photo' };
 
 export default function ProfilScreen() {
-  const { username, setUsername, tags } = useUserPreferences();
+  const { username, setUsername, tags, segment, setUserSegment, clearUserSegment } = useUserPreferences();
   const [photoUri, setPhotoUri] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState('');
@@ -213,6 +214,42 @@ export default function ProfilScreen() {
               ))
             )}
           </View>
+        </View>
+
+        <View
+          className="p-4 rounded-2xl mt-4"
+          style={{ backgroundColor: '#fff', shadowColor: PASTEL_PINK, shadowOpacity: 0.2, shadowRadius: 6, elevation: 3 }}
+        >
+          <Text className="text-sm font-semibold mb-3" style={{ color: '#6b7280' }}>
+            EcoBeauty — deux parcours
+          </Text>
+          <Text className="text-xs mb-3" style={{ color: '#9ca3af' }}>
+            Parcours actuel : {segment === 'b2b' ? 'Professionnel' : 'Particulier'}
+          </Text>
+          <TouchableOpacity
+            onPress={async () => {
+              await setUserSegment('b2b');
+              router.replace('/pro/index');
+            }}
+            className="py-3 px-4 rounded-xl mb-2"
+            style={{ backgroundColor: '#ecfdf5', borderWidth: 1, borderColor: PASTEL_GREEN }}
+          >
+            <Text className="font-bold text-center" style={{ color: '#166534' }}>
+              Espace partenaire (B2B)
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={async () => {
+              await clearUserSegment();
+              router.replace('/gateway');
+            }}
+            className="py-3 px-4 rounded-xl"
+            style={{ backgroundColor: '#f3f4f6' }}
+          >
+            <Text className="font-semibold text-center" style={{ color: '#4b5563' }}>
+              Changer de parcours (accueil)
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Animated.View>
